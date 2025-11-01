@@ -46,9 +46,9 @@ export default function TelaDetalhes({ route, navigation }) {
             </Text>
 
             <View style={estilos.especificacoes}>
-              <Text style={estilos.textoEspecificacao}>🛏️ {imovel.quartos || 0} quartos</Text>
-              <Text style={estilos.textoEspecificacao}>🚿 {imovel.banheiros || 0} banheiros</Text>
-              <Text style={estilos.textoEspecificacao}>📐 {imovel.area || '---'}</Text>
+              <Text style={estilos.textoEspecificacao}> {imovel.quartos || 0} quartos</Text>
+              <Text style={estilos.textoEspecificacao}> {imovel.banheiros || 0} banheiros</Text>
+              <Text style={estilos.textoEspecificacao}> {imovel.area || '---'}</Text>
             </View>
 
             <TouchableOpacity 
@@ -84,7 +84,7 @@ const estilos = StyleSheet.create({
   },
   cabecalhoImagem: {
     width: width,
-    height: 100,
+    height: 350,
   },
   tituloTopo: {
     fontSize: 22,

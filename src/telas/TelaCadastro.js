@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { 
-  StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert 
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert, Image, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useImoveis } from '../contexto/ContextoImoveis';
+
+const { width } = Dimensions.get('window');
 
 export default function TelaCadastro({ navigation }) {
   const { adicionarImovel } = useImoveis();
@@ -16,7 +16,7 @@ export default function TelaCadastro({ navigation }) {
     banheiros: '',
     area: '',
     descricao: '',
-    imagem: '', // novo campo para imagem via URL
+    imagem: '',
   });
 
   const manipularAdicaoImovel = () => {
@@ -33,6 +33,12 @@ export default function TelaCadastro({ navigation }) {
   return (
     <SafeAreaView style={estilos.areaSegura} edges={['bottom']}>
       <ScrollView style={estilos.container}>
+          {/* Cabeçalho com as casinhas */}
+          <Image 
+            source={require('../../assets/imagens/banner.png')} 
+            style={estilos.cabecalhoImagem} 
+            resizeMode="cover"
+        />
         <View style={estilos.formulario}>
           <Text style={estilos.rotulo}>Nome do Imóvel *</Text>
           <TextInput
@@ -147,6 +153,10 @@ const estilos = StyleSheet.create({
   },
   formulario: {
     padding: 20,
+  },
+  cabecalhoImagem: {
+    width: width,
+    height: 350,
   },
   rotulo: {
     fontSize: 16,

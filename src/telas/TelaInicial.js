@@ -2,6 +2,7 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, Dimensions, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useImoveis } from '../contexto/ContextoImoveis';
 
+
 const { width } = Dimensions.get('window');
 
 export default function TelaInicial({ navigation }) {
@@ -75,7 +76,7 @@ const estilos = StyleSheet.create({
   },
   cabecalhoImagem: {
     width: width,
-    height: 100,
+    height: 350,
   },
   tituloTopo: {
     fontSize: 20,
