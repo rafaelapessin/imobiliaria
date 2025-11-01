@@ -4,6 +4,7 @@ import TelaInicial from './src/telas/TelaInicial';
 import TelaCadastro from './src/telas/TelaCadastro';
 import TelaDetalhes from './src/telas/TelaDetalhes';
 import { ProvedorImoveis } from './src/contexto/ContextoImoveis';
+import "./src/contexto/ContextoImoveis"
 
 const Pilha = createNativeStackNavigator();
 

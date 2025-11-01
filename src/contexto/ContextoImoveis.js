@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import "../../assets/imagens/novoImovel.png"
 
 const ContextoImoveis = createContext();
 
@@ -40,12 +41,14 @@ export const ProvedorImoveis = ({ children }) => {
   ]);
 
   const adicionarImovel = (imovel) => {
-    const novoImovel = {
-      id: Date.now().toString(),
-      ...imovel,
-      imagem: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=300&fit=crop'
-    };
-    setImoveis([...imoveis, novoImovel]);
+  const novoImovel = {
+    id: Date.now().toString(),
+    ...imovel,
+    imagem: imovel.imagem
+      ? { uri: imovel.imagem } // usa link informado
+      : require('../../assets/imagens/novoImovel.png'), // fallback local
+  };
+  setImoveis([...imoveis, novoImovel]);
   };
 
   return (

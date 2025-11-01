@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
+import { 
+  StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert 
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useImoveis } from '../contexto/ContextoImoveis';
 
@@ -13,7 +15,8 @@ export default function TelaCadastro({ navigation }) {
     quartos: '',
     banheiros: '',
     area: '',
-    descricao: ''
+    descricao: '',
+    imagem: '', // novo campo para imagem via URL
   });
 
   const manipularAdicaoImovel = () => {
@@ -55,6 +58,16 @@ export default function TelaCadastro({ navigation }) {
             value={dadosFormulario.preco}
             onChangeText={(texto) => setDadosFormulario({...dadosFormulario, preco: texto})}
             placeholder="Ex: R$ 450.000"
+            placeholderTextColor="#999"
+          />
+
+          {/* NOVO CAMPO DE IMAGEM */}
+          <Text style={estilos.rotulo}>Imagem (URL)</Text>
+          <TextInput
+            style={estilos.entrada}
+            value={dadosFormulario.imagem}
+            onChangeText={(texto) => setDadosFormulario({...dadosFormulario, imagem: texto})}
+            placeholder="Ex: https://exemplo.com/imagem.jpg"
             placeholderTextColor="#999"
           />
 

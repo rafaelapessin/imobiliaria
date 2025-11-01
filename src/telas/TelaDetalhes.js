@@ -1,60 +1,70 @@
-import { StyleSheet, View, Image, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, ScrollView, Alert, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+const { width } = Dimensions.get('window');
 
 export default function TelaDetalhes({ route, navigation }) {
   const { imovel } = route.params;
 
-  return (
-    <SafeAreaView style={estilos.areaSegura} edges={['bottom']}>
-      <ScrollView style={estilos.container}>
-        <Image 
-          source={{ uri: imovel.imagem }} 
-          style={estilos.imagemDetalhes} 
-        />
-        
-        <View style={estilos.conteudoDetalhes}>
-          <Text style={estilos.tituloDetalhes}>{imovel.nome}</Text>
-          <Text style={estilos.enderecoDetalhes}>{imovel.endereco}</Text>
-          <Text style={estilos.precoDetalhes}>{imovel.preco}</Text>
-          
-          <View style={estilos.especificacoesDetalhes}>
-            <View style={estilos.itemEspecificacao}>
-              <Text style={estilos.iconeEspecificacao}>🛏️</Text>
-              <Text style={estilos.textoEspecificacao}>{imovel.quartos}</Text>
-              <Text style={estilos.rotuloEspecificacao}>Quartos</Text>
-            </View>
-            <View style={estilos.itemEspecificacao}>
-              <Text style={estilos.iconeEspecificacao}>🚿</Text>
-              <Text style={estilos.textoEspecificacao}>{imovel.banheiros}</Text>
-              <Text style={estilos.rotuloEspecificacao}>Banheiros</Text>
-            </View>
-            <View style={estilos.itemEspecificacao}>
-              <Text style={estilos.iconeEspecificacao}>📐</Text>
-              <Text style={estilos.textoEspecificacao}>{imovel.area}</Text>
-              <Text style={estilos.rotuloEspecificacao}>Área</Text>
-            </View>
-          </View>
+  const excluirImovel = () => {
+    Alert.alert(
+      'Excluir imóvel',
+      'Tem certeza que deseja excluir este imóvel?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Excluir', style: 'destructive', onPress: () => {
+            Alert.alert('Excluído', 'O imóvel foi removido com sucesso.');
+            navigation.navigate('Inicial');
+          }
+        }
+      ]
+    );
+  };
 
-          <View style={estilos.secaoDescricao}>
-            <Text style={estilos.tituloDescricao}>Descrição</Text>
-            <Text style={estilos.textoDescricao}>
+  return (
+    <SafeAreaView style={estilos.areaSegura}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={estilos.container}>
+          {/* Cabeçalho com casinhas */}
+          <Image 
+            source={require('../../assets/imagens/banner.png')} 
+            style={estilos.cabecalhoImagem}
+            resizeMode="cover"
+          />
+
+          <Text style={estilos.tituloTopo}>Detalhes do Imóvel</Text>
+
+          <View style={estilos.cartaoDetalhes}>
+            <View style={estilos.areaImagem}>
+              <Text style={estilos.textoImagem}>ESPAÇO PARA IMAGEM</Text>
+            </View>
+
+            <Text style={estilos.titulo}>{imovel.titulo || imovel.nome}</Text>
+            <Text style={estilos.valor}>R$ {imovel.valor || imovel.preco}</Text>
+            <Text style={estilos.descricao}>
               {imovel.descricao || 'Sem descrição disponível.'}
             </Text>
+
+            <View style={estilos.especificacoes}>
+              <Text style={estilos.textoEspecificacao}>🛏️ {imovel.quartos || 0} quartos</Text>
+              <Text style={estilos.textoEspecificacao}>🚿 {imovel.banheiros || 0} banheiros</Text>
+              <Text style={estilos.textoEspecificacao}>📐 {imovel.area || '---'}</Text>
+            </View>
+
+            <TouchableOpacity 
+              style={estilos.botaoExcluir}
+              onPress={excluirImovel}
+            >
+              <Text style={estilos.textoBotaoExcluir}>Excluir Imóvel</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={estilos.botaoVoltar}
+              onPress={() => navigation.navigate('Inicial')}
+            >
+              <Text style={estilos.textoBotaoVoltar}>← Voltar</Text>
+            </TouchableOpacity>
           </View>
-
-          <TouchableOpacity 
-            style={estilos.botaoContato}
-            onPress={() => Alert.alert('Contato', 'Funcionalidade em desenvolvimento')}
-          >
-            <Text style={estilos.textoBotaoContato}>Entrar em Contato</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={estilos.botaoVoltar}
-            onPress={() => navigation.navigate('Inicial')}
-          >
-            <Text style={estilos.textoBotaoVoltar}>← Voltar para Início</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -64,102 +74,95 @@ export default function TelaDetalhes({ route, navigation }) {
 const estilos = StyleSheet.create({
   areaSegura: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#EDC4B3',
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
-  },
-  imagemDetalhes: {
-    width: '100%',
-    height: 300,
+    alignItems: 'center',
     backgroundColor: '#EDC4B3',
+    paddingBottom: 30,
   },
-  conteudoDetalhes: {
+  cabecalhoImagem: {
+    width: width,
+    height: 100,
+  },
+  tituloTopo: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#3B3B3B',
+    marginVertical: 15,
+  },
+  cartaoDetalhes: {
+    width: '85%',
+    backgroundColor: '#FFF8F4',
+    borderRadius: 12,
     padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  tituloDetalhes: {
-    fontSize: 28,
+  areaImagem: {
+    backgroundColor: '#D9D9D9',
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  textoImagem: {
+    color: '#777',
+  },
+  titulo: {
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#545947',
     marginBottom: 8,
   },
-  enderecoDetalhes: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 15,
-  },
-  precoDetalhes: {
-    fontSize: 32,
+  valor: {
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#AC3131',
+    marginBottom: 12,
+  },
+  descricao: {
+    fontSize: 16,
+    color: '#444',
+    lineHeight: 22,
     marginBottom: 20,
   },
-  especificacoesDetalhes: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#EDC4B3',
-    padding: 20,
-    borderRadius: 12,
+  especificacoes: {
+    backgroundColor: '#A5DDD6',
+    borderRadius: 8,
+    padding: 10,
     marginBottom: 20,
-  },
-  itemEspecificacao: {
-    alignItems: 'center',
-  },
-  iconeEspecificacao: {
-    fontSize: 32,
-    marginBottom: 5,
   },
   textoEspecificacao: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: '#545947',
+    marginVertical: 2,
   },
-  rotuloEspecificacao: {
-    fontSize: 12,
-    color: '#545947',
-    marginTop: 2,
-  },
-  secaoDescricao: {
-    marginBottom: 20,
-  },
-  tituloDescricao: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#545947',
-    marginBottom: 10,
-  },
-  textoDescricao: {
-    fontSize: 16,
-    color: '#666',
-    lineHeight: 24,
-  },
-  botaoContato: {
+  botaoExcluir: {
     backgroundColor: '#AC3131',
-    padding: 15,
+    paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
   },
-  textoBotaoContato: {
-    color: '#FFF',
+  textoBotaoExcluir: {
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
   },
   botaoVoltar: {
     backgroundColor: '#545947',
-    padding: 15,
+    paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
-    marginBottom: 20,
   },
   textoBotaoVoltar: {
-    color: '#FFF',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },

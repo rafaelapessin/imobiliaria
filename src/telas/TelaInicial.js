@@ -1,6 +1,8 @@
-import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, Dimensions, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useImoveis } from '../contexto/ContextoImoveis';
+
+const { width } = Dimensions.get('window');
 
 export default function TelaInicial({ navigation }) {
   const { imoveis } = useImoveis();
@@ -10,38 +12,52 @@ export default function TelaInicial({ navigation }) {
       style={estilos.cardImovel}
       onPress={() => navigation.navigate('Detalhes', { imovel: item })}
     >
-      <Image source={item.imagem} style={estilos.imagemImovel} />
+      <View style={estilos.areaImagem}>
+        <Text style={estilos.textoImagem}>ESPAÇO PARA IMAGEM</Text>
+      </View>
       <View style={estilos.infoImovel}>
-        <Text style={estilos.nomeImovel}>{item.nome}</Text>
-        <Text style={estilos.enderecoImovel}>{item.endereco}</Text>
-        <Text style={estilos.precoImovel}>{item.preco}</Text>
-        <View style={estilos.detalhesImovel}>
-          <Text style={estilos.textoDetalhe}>🛏️ {item.quartos} quartos</Text>
-          <Text style={estilos.textoDetalhe}>🚿 {item.banheiros} banheiros</Text>
-          <Text style={estilos.textoDetalhe}>📐 {item.area}</Text>
-        </View>
+        <Text style={estilos.tituloAnuncio}>{item.titulo}</Text>
+        <Text style={estilos.descricao}>{item.descricao}</Text>
+        <Text style={estilos.valor}>R$ {item.valor}</Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={estilos.areaSegura} edges={['bottom']}>
-      <View style={estilos.container}>
-        <TouchableOpacity 
-          style={estilos.botaoAdicionar}
-          onPress={() => navigation.navigate('Cadastro')}
-        >
-          <Text style={estilos.textoBotaoAdicionar}>+ Cadastrar Novo Imóvel</Text>
-        </TouchableOpacity>
-        
-        <FlatList
-          data={imoveis}
-          renderItem={renderizarCardImovel}
-          keyExtractor={item => item.id}
-          contentContainerStyle={estilos.containerLista}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+    <SafeAreaView style={estilos.areaSegura}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={estilos.container}>
+          {/* Cabeçalho com as casinhas */}
+          <Image 
+            source={require('../../assets/imagens/banner.png')} 
+            style={estilos.cabecalhoImagem} 
+            resizeMode="cover"
+          />
+
+          <Text style={estilos.tituloTopo}>3 Cores Imobiliária</Text>
+
+          {/* Botão cadastrar novo imóvel */}
+          <TouchableOpacity 
+            style={estilos.botaoCadastrar}
+            onPress={() => navigation.navigate('Cadastro')}
+          >
+            <Text style={estilos.textoBotaoCadastrar}>Cadastrar novo imóvel</Text>
+          </TouchableOpacity>
+
+          <Text style={estilos.subtitulo}>Nossos imóveis:</Text>
+
+          {/* Lista de imóveis */}
+          <View style={estilos.areaLista}>
+            <FlatList
+              data={imoveis}
+              renderItem={renderizarCardImovel}
+              keyExtractor={item => item.id}
+              contentContainerStyle={estilos.containerLista}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -49,77 +65,87 @@ export default function TelaInicial({ navigation }) {
 const estilos = StyleSheet.create({
   areaSegura: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#EDC4B3',
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
-  },
-  botaoAdicionar: {
-    backgroundColor: '#A5DDD6',
-    padding: 15,
-    margin: 15,
-    borderRadius: 8,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  textoBotaoAdicionar: {
-    color: '#545947',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  containerLista: {
-    padding: 15,
-    paddingTop: 0,
-  },
-  cardImovel: {
-    backgroundColor: '#FFF',
-    borderRadius: 12,
-    marginBottom: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#EDC4B3',
-  },
-  imagemImovel: {
-    width: '40%',
-    height: 200,
     backgroundColor: '#EDC4B3',
+    paddingBottom: 30,
   },
-  infoImovel: {
-    padding: 15,
+  cabecalhoImagem: {
+    width: width,
+    height: 100,
   },
-  nomeImovel: {
+  tituloTopo: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000000ff',
-    marginBottom: 5,
-  },
-  enderecoImovel: {
-    fontSize: 15,
-    color: '#000000ff',
+    color: '#3B3B3B',
+    marginTop: 8,
     marginBottom: 10,
   },
-  precoImovel: {
-    fontSize: 22,
+  botaoCadastrar: {
+    backgroundColor: '#545947',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 6,
+    marginBottom: 15,
+  },
+  textoBotaoCadastrar: {
+    color: '#FFFFFF',
     fontWeight: 'bold',
-    color: '#AC3131',
+    fontSize: 16,
+  },
+  subtitulo: {
+    fontSize: 18,
+    fontWeight: '600',
     marginBottom: 10,
+    color: '#3B3B3B',
   },
-  detalhesImovel: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  areaLista: {
+    backgroundColor: '#A5DDD6',
+    width: '90%',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
-  textoDetalhe: {
-    fontSize: 15,
+  containerLista: {
+    paddingBottom: 10,
+  },
+  cardImovel: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 12,
+  },
+  areaImagem: {
+    backgroundColor: '#D9D9D9',
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  textoImagem: {
+    color: '#777',
+  },
+  infoImovel: {
+    alignItems: 'flex-start',
+  },
+  tituloAnuncio: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  descricao: {
+    fontSize: 14,
+    color: '#444',
+    marginBottom: 4,
+  },
+  valor: {
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#545947',
   },
 });
