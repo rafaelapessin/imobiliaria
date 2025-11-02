@@ -14,12 +14,12 @@ export default function TelaInicial({ navigation }) {
       onPress={() => navigation.navigate('Detalhes', { imovel: item })}
     >
       <View style={estilos.areaImagem}>
-        <Text style={estilos.textoImagem}>ESPAÇO PARA IMAGEM</Text>
+        <Image source={item.imagem} style={estilos.imagem} />
       </View>
       <View style={estilos.infoImovel}>
-        <Text style={estilos.tituloAnuncio}>{item.titulo}</Text>
+        <Text style={estilos.tituloAnuncio}>{item.nome}</Text>
         <Text style={estilos.descricao}>{item.descricao}</Text>
-        <Text style={estilos.valor}>R$ {item.valor}</Text>
+        <Text style={estilos.preco}>R$ {item.preco},00</Text>
       </View>
     </TouchableOpacity>
   );
@@ -29,12 +29,8 @@ export default function TelaInicial({ navigation }) {
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={estilos.container}>
           {/* Cabeçalho com as casinhas */}
-          <Image 
-            source={require('../../assets/imagens/banner.png')} 
-            style={estilos.cabecalhoImagem} 
-            resizeMode="cover"
-          />
-
+          <Image source={require('../../assets/imagens/banner.png')} style={estilos.cabecalhoImagem}/>
+          <Image source={require('../../assets/imagens/logo.webp')} style={estilos.logo}/>
           <Text style={estilos.tituloTopo}>3 Cores Imobiliária</Text>
 
           {/* Botão cadastrar novo imóvel */}
@@ -45,7 +41,7 @@ export default function TelaInicial({ navigation }) {
             <Text style={estilos.textoBotaoCadastrar}>Cadastrar novo imóvel</Text>
           </TouchableOpacity>
 
-          <Text style={estilos.subtitulo}>Nossos imóveis:</Text>
+          <Text style={estilos.subtitulo}>Conheça nossos imóveis e descubra o melhor em um só lugar!</Text>
 
           {/* Lista de imóveis */}
           <View style={estilos.areaLista}>
@@ -75,8 +71,9 @@ const estilos = StyleSheet.create({
     paddingBottom: 30,
   },
   cabecalhoImagem: {
-    width: width,
+    width: '100%',
     height: 350,
+    resizeMode: 'cover',
   },
   tituloTopo: {
     fontSize: 20,
@@ -120,11 +117,23 @@ const estilos = StyleSheet.create({
     marginBottom: 12,
   },
   areaImagem: {
+    width: '100%',
     backgroundColor: '#D9D9D9',
-    height: 100,
+    height: 400,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
+    marginBottom: 8,
+  },
+  imagem: {
+  width: '100%',
+  height: 400,
+  borderRadius: 8,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
     marginBottom: 8,
   },
   textoImagem: {
@@ -134,19 +143,19 @@ const estilos = StyleSheet.create({
     alignItems: 'flex-start',
   },
   tituloAnuncio: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#000000ff',
     marginBottom: 4,
   },
   descricao: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#444',
     marginBottom: 4,
   },
-  valor: {
-    fontSize: 16,
+  preco: {
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#545947',
+    color: '#AC3131',
   },
 });

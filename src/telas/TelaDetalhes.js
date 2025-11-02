@@ -6,41 +6,22 @@ const { width } = Dimensions.get('window');
 export default function TelaDetalhes({ route, navigation }) {
   const { imovel } = route.params;
 
-  const excluirImovel = () => {
-    Alert.alert(
-      'Excluir imóvel',
-      'Tem certeza que deseja excluir este imóvel?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { text: 'Excluir', style: 'destructive', onPress: () => {
-            Alert.alert('Excluído', 'O imóvel foi removido com sucesso.');
-            navigation.navigate('Inicial');
-          }
-        }
-      ]
-    );
-  };
-
   return (
     <SafeAreaView style={estilos.areaSegura}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={estilos.container}>
           {/* Cabeçalho com casinhas */}
-          <Image 
-            source={require('../../assets/imagens/banner.png')} 
-            style={estilos.cabecalhoImagem}
-            resizeMode="cover"
-          />
+          <Image source={require('../../assets/imagens/banner.png')} style={estilos.cabecalhoImagem}/>
 
           <Text style={estilos.tituloTopo}>Detalhes do Imóvel</Text>
 
           <View style={estilos.cartaoDetalhes}>
             <View style={estilos.areaImagem}>
-              <Text style={estilos.textoImagem}>ESPAÇO PARA IMAGEM</Text>
+              <Image source={imovel.imagem} style={estilos.imagem} />
             </View>
 
-            <Text style={estilos.titulo}>{imovel.titulo || imovel.nome}</Text>
-            <Text style={estilos.valor}>R$ {imovel.valor || imovel.preco}</Text>
+            <Text style={estilos.titulo}>{imovel.nome}</Text>
+            <Text style={estilos.preco}>R$ {imovel.preco},00</Text>
             <Text style={estilos.descricao}>
               {imovel.descricao || 'Sem descrição disponível.'}
             </Text>
@@ -48,21 +29,15 @@ export default function TelaDetalhes({ route, navigation }) {
             <View style={estilos.especificacoes}>
               <Text style={estilos.textoEspecificacao}> {imovel.quartos || 0} quartos</Text>
               <Text style={estilos.textoEspecificacao}> {imovel.banheiros || 0} banheiros</Text>
-              <Text style={estilos.textoEspecificacao}> {imovel.area || '---'}</Text>
+              <Text style={estilos.textoEspecificacao}> {imovel.area || '---'} m²</Text>
             </View>
 
-            <TouchableOpacity 
-              style={estilos.botaoExcluir}
-              onPress={excluirImovel}
-            >
+            <TouchableOpacity style={estilos.botaoExcluir}>
               <Text style={estilos.textoBotaoExcluir}>Excluir Imóvel</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity 
-              style={estilos.botaoVoltar}
-              onPress={() => navigation.navigate('Inicial')}
-            >
-              <Text style={estilos.textoBotaoVoltar}>← Voltar</Text>
+            <TouchableOpacity style={estilos.botaoVoltar} onPress={() => navigation.navigate('Inicial')}>
+              <Text style={estilos.textoBotaoVoltar}>Voltar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -85,6 +60,7 @@ const estilos = StyleSheet.create({
   cabecalhoImagem: {
     width: width,
     height: 350,
+    resizeMode: 'cover',
   },
   tituloTopo: {
     fontSize: 22,
@@ -105,11 +81,16 @@ const estilos = StyleSheet.create({
   },
   areaImagem: {
     backgroundColor: '#D9D9D9',
-    height: 200,
+    height: 400,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
     marginBottom: 15,
+  },
+  imagem: {
+  width: '100%',
+  height: 400,
+  borderRadius: 8,
   },
   textoImagem: {
     color: '#777',
@@ -120,7 +101,7 @@ const estilos = StyleSheet.create({
     color: '#545947',
     marginBottom: 8,
   },
-  valor: {
+  preco: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#AC3131',

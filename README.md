@@ -13,14 +13,14 @@ http://nodejs.org/pt/download
 
 ### Instalando expo
 
-* yarn add expo@^54.0.0     OU
+* yarn add expo@^54.0.0
 * npm install expo@^54.0.0
 * Expo CLI: https://docs.expo.dev/more/expo-cli/
 * Upgrade Expo SDK: https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/
 
 ### Instalando dependências
 
-* npm install       OU
+* npm install
 * yarn
 
 ### Executando

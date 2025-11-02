@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert, Image, Dimensions } from 'react-native';
+import { 
+  StyleSheet, View, Text, TouchableOpacity, TextInput, 
+  ScrollView, Alert, Image, Dimensions 
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useImoveis } from '../contexto/ContextoImoveis';
 
@@ -19,26 +22,30 @@ export default function TelaCadastro({ navigation }) {
     imagem: '',
   });
 
+  // 👉 Função de manipulação da adição de imóvel
   const manipularAdicaoImovel = () => {
+    // Validação simples: Nome, Endereço e Preço são obrigatórios
     if (!dadosFormulario.nome || !dadosFormulario.endereco || !dadosFormulario.preco) {
-      Alert.alert('Erro', 'Por favor, preencha pelo menos Nome, Endereço e Preço');
       return;
     }
 
+    // Adiciona imóvel
     adicionarImovel(dadosFormulario);
-    Alert.alert('Sucesso', 'Imóvel cadastrado com sucesso!');
+
+    // Navegação para voltar para a tela inicial
     navigation.navigate('Inicial');
   };
 
   return (
     <SafeAreaView style={estilos.areaSegura} edges={['bottom']}>
       <ScrollView style={estilos.container}>
-          {/* Cabeçalho com as casinhas */}
-          <Image 
-            source={require('../../assets/imagens/banner.png')} 
-            style={estilos.cabecalhoImagem} 
-            resizeMode="cover"
+        {/* Cabeçalho com imagem/banner */}
+        <Image 
+          source={require('../../assets/imagens/banner.png')} 
+          style={estilos.cabecalhoImagem} 
+          resizeMode="cover"
         />
+
         <View style={estilos.formulario}>
           <Text style={estilos.rotulo}>Nome do Imóvel *</Text>
           <TextInput
@@ -67,7 +74,6 @@ export default function TelaCadastro({ navigation }) {
             placeholderTextColor="#999"
           />
 
-          {/* NOVO CAMPO DE IMAGEM */}
           <Text style={estilos.rotulo}>Imagem (URL)</Text>
           <TextInput
             style={estilos.entrada}
@@ -123,6 +129,7 @@ export default function TelaCadastro({ navigation }) {
             numberOfLines={4}
           />
 
+          {/* Botão principal */}
           <TouchableOpacity 
             style={estilos.botaoEnviar}
             onPress={manipularAdicaoImovel}
@@ -130,6 +137,7 @@ export default function TelaCadastro({ navigation }) {
             <Text style={estilos.textoBotaoEnviar}>Cadastrar Imóvel</Text>
           </TouchableOpacity>
 
+          {/* Botão de voltar */}
           <TouchableOpacity 
             style={estilos.botaoVoltar}
             onPress={() => navigation.navigate('Inicial')}
