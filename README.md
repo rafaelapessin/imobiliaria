@@ -23,6 +23,6 @@ http://nodejs.org/pt/download
 * npm install
 * yarn
 
-### Executando
+### Executando a aplicação
 
 * npx expo start
